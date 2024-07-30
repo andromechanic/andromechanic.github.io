@@ -1,106 +1,548 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resume</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #0f0f0f;
-      color: #ffffff;
-      padding-top: 50px;
-      padding-bottom: 50px;
-    }
-    .section {
-      margin-bottom: 40px;
-    }
-    .section-header {
-      color: #1abc9c;
-      border-bottom: 2px solid #1abc9c;
-      padding-bottom: 10px;
-    }
-    .work-experience li {
-      margin-bottom: 10px;
-      font-size: 1.1em;
-      line-height: 1.6;
-    }
-    .contact-footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #242424;
-      color: #ffffff;
-      margin-top: 50px;
-    }
-    .social-links a {
-      color: #ffffff;
-      margin: 0 10px;
-      font-size: 1.5em;
-    }
-    @media (min-width: 768px) {
-      .container {
-        max-width: 768px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="section">
-      <div class="name-container">
-        <h1 class="display-4">Akhil M</h1>
-        <p class="lead">Mechanical Engineer | Web Developer | AI Enthusiast | Android Tester</p>
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/andromechanic" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="https://www.blogger.com/profile/10649077224558741520" target="_blank"><i class="fas fa-blog"></i></a>
-          <a href="https://www.instagram.com/akhil_muralidas_" target="_blank"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <div class="section">
-      <h2 class="section-header">About Me</h2>
-      <p>Visionary web developer with a passion for creating futuristic digital experiences. Committed to pushing the boundaries of technology and design to shape the future.</p>
-    </div>
-    <hr>
-    <div class="section">
-      <h2 class="section-header">Skills</h2>
-      <ul class="work-experience">
-        <li>Web Development: HTML5, CSS, JavaScript</li>
-        <li>App Development: Python, Flask</li>
-        <li>Data Management: SQL, PostgreSQL</li>
-        <li>CAD: AutoCAD, Fusion 360, CATIA</li>
-        <li>AI/ML: Prompt Engineering, Generative AI, Machine Learning fundamentals</li>
-        <li>Programming: C++, Python</li>
-      </ul>
-    </div>
-    <hr>
-    <div class="section">
-      <h2 class="section-header">Linguistic Proficiency</h2>
-      <ul class="work-experience">
-        <li>English (Fluent)</li>
-        <li>Hindi (Spoken)</li>
-        <li>Malayalam (Native)</li>
-        <li>Tamil (Native)</li>
-      </ul>
-    </div>
-    <hr>
-    <div class="section">
-      <h2 class="section-header">Education</h2>
-      <ul class="work-experience">
-        <li>Bachelor of Technology in Mechanical Engineering - Kerala Technological University (2018 - 2022)</li>
-        <li>Diploma in Programming - Indian Institute of Technology, Madras (2023 - 2024)</li>
-      </ul>
-    </div>
-    <hr>
-    <div class="contact-footer">
-      <p>Contact: akhil.m2k@gmail.com</p>
-      <p>Life is full of wonders; let our meeting be one of those.</p>
-    </div>
-  </div>
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</body>
-</html>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Akhil M's Portfolio</title>
+            <style>
+                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #fff;
+            background: linear-gradient(120deg, #000000, #1e1e1e, #3a3a3a, #007bff, #00aaff);
+            background-size: 200% 200%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+            filter: blur(0px);
+            transition: filter 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header:hover {
+            filter: blur(0px);
+            box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.7);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li {
+            position: relative;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 200%;
+            height: 100%;
+            background: rgba(0, 123, 255, 0.5);
+            transition: transform 0.4s ease;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            z-index: 0;
+        }
+
+        nav ul li a:hover::before {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        nav ul li a:hover {
+            color: #00aaff;
+            transform: translateY(-0.5rem);
+        }
+
+        nav ul li a:active {
+            transform: translateY(0.2rem);
+        }
+
+        .banner-container {
+            perspective: 1200px;
+            padding: 2rem;
+        }
+
+        .banner {
+            background: url('your-banner-image-url') no-repeat center center/cover;
+            padding: 3rem 0;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
+            box-shadow: 0 0 3rem rgba(0, 123, 255, 0.7), 0 0 6rem rgba(0, 123, 255, 0.5), 0 0 9rem rgba(0, 123, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .banner:hover {
+            transform: rotateY(10deg) rotateX(10deg);
+            box-shadow: 0 0 4rem rgba(0, 123, 255, 0.8), 0 0 8rem rgba(0, 123, 255, 0.6), 0 0 12rem rgba(0, 123, 255, 0.4);
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            color: #007bff;
+            text-shadow: 0 0 2rem rgba(0, 123, 255, 0.7);
+            animation: typewriter 4s steps(10) 1s 1 normal both, blinkTextCursor 500ms steps(44) infinite normal;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid #007bff;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blinkTextCursor {
+            from { border-right-color: #007bff; }
+            to { border-right-color: transparent; }
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+            animation: fadeInUp 2s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-links a {
+            color: #fff;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: #00aaff;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .image-holder {
+            width: 15rem;
+            height: 15rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 0.5rem solid #007bff;
+            box-shadow: 0 0 2rem rgba(0, 123, 255, 0.7);
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        section {
+            padding: 2rem;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: -1rem;
+            width: 100%;
+            height: 100%;
+            background: url('doodle-svg-url') no-repeat center center;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        section h2, section h3 {
+            color: #00aaff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline {
+            position: relative; 
+            max-width: 90%;
+            margin: 2rem auto;
+            padding: 1rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 0.25rem;
+            background-color: #007bff;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            padding: 1rem;
+            position: relative;
+            width: 45%;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            box-shadow: 0 0 1rem rgba(0, 123, 255, 0.3);
+            color: #fff;
+            z-index: 2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 1.5rem rgba(0, 123, 255, 0.5);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            background: #007bff;
+            border-radius: 50%;
+            top: 1rem;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -0.5rem;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -0.5rem;
+        }
+
+        .timeline-item-content {
+            padding: 0.5rem;
+        }
+
+        .timeline-item-content h3 {
+            margin-top: 0;
+            color: #00aaff;
+        }
+
+        .timeline-item-content p {
+            margin-bottom: 0;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 18rem;
+            height: 12rem;
+            perspective: 1000px;
+            margin: 1rem;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .flip-card-front {
+            background-color: #2980b9;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+        }
+
+            .flip-card-back {
+                background-color: #2c3e50;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: rotateY(180deg);
+                font-size: 1rem;
+                padding: 1rem; /* Add padding around the content */ 
+            }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .skills .flip-card {
+            margin: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+            
+            </style>
+        </head>
+        <body>
+            <header>
+                <nav>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#education">Education</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#timeline">Timeline</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section class="banner-container">
+                <div class="banner">
+                    <div class="image-holder">
+                        <img src="profile.png" alt="Profile Picture">
+                    </div>
+                    <h1>AKHIL M</h1>
+                    <p class="lead">Mechanical Engineer | Web Developer | AI Enthusiast | Android Tester</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/andromechanic" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.blogger.com/profile/10649077224558741520" target="_blank"><i class="fas fa-blog"></i></a>
+                        <a href="https://www.instagram.com/akhil_muralidas_" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>  
+            </section>
+
+            <section id="about">
+                <h2>About Me</h2>
+                <p>Hello! I'm Akhil M, a passionate Mechanical Engineer with a strong interest in Artificial Intelligence. I have a diverse skill set that spans web development, app development, data management, CAD, AI/ML, and programming.</p>
+            </section>
+
+        </section>
+            <section id="skills">
+                <h2>Skills</h2>
+                <div class="skills">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>Web Development</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>HTML5, CSS, JavaScript</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>App Development</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Python, Flask</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>Data Management</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>SQL, PostgreSQL</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>CAD</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>AutoCAD, Fusion 360, CATIA</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>AI/ML</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Prompt Engineering, Generative AI, Machine Learning fundamentals, LLMs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>Programming</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>C++, Python</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>Projects</h2>
+                <h3>Personal Assistant Bot</h3>
+                <p>Developed a personal assistant bot with Ollama and SQLite.</p>
+                <h3>Library Management System</h3>
+                <p>Created a web app for Library Management System using Flask and Python.</p>
+            </section>
+
+            <section id="education">
+                <h2>Education</h2>
+                <p>B.Tech in Mechanical Engineering from APJ Abdul Kalam Technological University (2018-2022).</p>
+                <p>Foundational Level in Programming and Data Science from IIT Madras.</p>
+                <p>Currently pursuing a diploma in programming.</p>
+            </section>
+
+            <section id="experience">
+                <h2>Experience</h2>
+                <p>Engaged in internships, workshops, and various projects, enhancing my skills and gaining valuable experience.</p>
+            </section>
+
+            <section id="timeline">
+                <h2>Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-item-content">
+                            <h3>2018</h3>
+                            <p>Completed +2</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-content">
+                            <h3>2022</h3>
+                            <p>Completed B.Tech in Mechanical Engineering</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-content">
+                            <h3>2023</h3>
+                            <p>Completed Foundation in Data Science from IIT Madras</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-content">
+                            <h3>2024</h3>
+                            <p>Completed Diploma in Programming from IIT Madras</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Feel free to reach out to me via <a href="mailto:akhilm@xyz.com">email</a>.</p>
+            </section>
+
+            <footer>
+                <p>&copy; 2024 Akhil M. All rights reserved.</p>
+            </footer>
+        </body>
+        </html>
+                
