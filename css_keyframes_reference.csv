@@ -1,0 +1,7 @@
+Animation Name,Purpose,Keyframes,Usage
+@keyframes letterFall,Letter A falling animation,0% {transform: translateY(-100vh)} 70% {transform: translateY(10px)} 100% {transform: translateY(0)},"animation: letterFall 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards"
+@keyframes slideFromRight,K & H slide animation,0% {transform: translateX(100vw)} 100% {transform: translateX(0)},animation: slideFromRight 1.5s ease-out forwards
+@keyframes rollIn,L & M rolling animation,0% {transform: translateX(100px) rotate(180deg)} 100% {transform: translateX(0) rotate(0deg)},"animation: rollIn 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards"
+@keyframes stackCard,Card stacking effect,0% {transform: translateY(20px) rotateX(10deg)} 100% {transform: translateY(0) rotateX(0)},animation: stackCard 0.8s ease-out forwards
+@keyframes glow,Continuous glow effect,0% {box-shadow: 0 0 5px #00ffff} 50% {box-shadow: 0 0 20px #00ffff} 100% {box-shadow: 0 0 5px #00ffff},animation: glow 2s ease-in-out infinite alternate
+@keyframes fadeInUp,Section reveal animation,0% {opacity: 0; transform: translateY(30px)} 100% {opacity: 1; transform: translateY(0)},animation: fadeInUp 1s ease-out forwards

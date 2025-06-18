@@ -1,0 +1,11 @@
+Feature,Animation Type,CSS Property,Duration,Easing,Trigger,JavaScript
+Name Animation - Letter A,Fall + Bounce,transform: translateY(),2s,"cubic-bezier(0.68, -0.55, 0.265, 1.55)",Page load,"setTimeout(() => {}, 500)"
+Name Animation - Letters K & H,Slide from right,transform: translateX(),1.5s,ease-out,After A settles,Sequential setTimeout
+Name Animation - Letter I,Rotate (slanted),transform: rotate(-15deg),0.5s,ease-in-out,After K & H,Click event listener
+Name Animation - Letters L & M,Roll from right,transform: translateX() + rotate(),1.8s,"cubic-bezier(0.25, 0.46, 0.45, 0.94)",I click correction,Event-driven animation
+Skills Stacking Cards,3D Transform Stack,transform: rotateX() rotateY() translateZ(),0.8s,ease-out,Intersection Observer,Scroll-based z-index management
+Card Hover Effects,Lift + Glow,transform: translateY() + box-shadow,0.3s,ease-in-out,Mouse hover,CSS :hover pseudo-class
+Parallax Background,Particle Movement,transform: translate(),Continuous,linear,Scroll event,RequestAnimationFrame loop
+Section Fade-In,Opacity + Translate,opacity + transform: translateY(),1s,ease-out,Intersection Observer,addClass('visible')
+Typography Scaling,Responsive Font Size,font-size (clamp function),Instant,N/A,Viewport resize,CSS Media Queries
+Social Link Pulse,Scale + Color,transform: scale() + background-color,0.4s,ease-in-out,Hover,CSS transitions

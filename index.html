@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKHIL M - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="AKHIL M - Mechanical Engineer turned Web Developer and AI Enthusiast. Experience the future of portfolio design with advanced animations and interactive elements.">
+    <meta name="keywords" content="AKHIL M, Web Developer, AI Enthusiast, Mechanical Engineer, Python, JavaScript, Machine Learning, Futuristic Portfolio, Interactive Design">
+    <meta name="author" content="AKHIL M">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:title" content="AKHIL M - Portfolio">
+    <meta property="og:description" content="Dynamic professional transitioning from mechanical engineering to programming and AI, with expertise in building software solutions and leveraging AI technologies.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="">
+    <meta property="twitter:title" content="AKHIL M - Portfolio">
+    <meta property="twitter:description" content="Experience the future of portfolio design with advanced animations, interactive name sequences, and stacking card effects.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMGEwYTBhIi8+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9Ik9yYml0cm9uLCBtb25vc3BhY2UiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiMwMGZmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkE8L3RleHQ+Cjwvc3ZnPgo=">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v29/yMJMMIlzdpvBhQQL_SC3X9yhF25-T1nyGy6BoWgwjDI.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="https://fonts.gstatic.com/s/rajdhani/v15/LDI2apCSOBg7S-QT7pasEcOsc-bGkqIw.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    
+    <style>
+        /* Critical CSS for initial load */
+        html {
+            visibility: hidden;
+            opacity: 0;
+            background: #0a0a0a;
+        }
+        
+        html.loaded {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Enhanced loading screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: loadingGradient 3s ease-in-out infinite;
+        }
+        
+        @keyframes loadingGradient {
+            0%, 100% { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); }
+            50% { background: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 50%, #0a0a0a 100%); }
+        }
+        
+        .loading-animation {
+            text-align: center;
+            position: relative;
+        }
+        
+        .loading-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            color: #00ffff;
+            text-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff;
+            animation: pulse-glow 2s infinite;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: 0.2em;
+        }
+        
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        .loading-dots span {
+            width: 20px;
+            height: 20px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: bounce-glow 1.8s ease-in-out infinite both;
+            box-shadow: 0 0 30px #00ffff;
+        }
+        
+        .loading-dots span:nth-child(1) { animation-delay: -0.4s; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes pulse-glow {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+                text-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff;
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.05);
+                text-shadow: 0 0 80px #00ffff, 0 0 150px #00ffff, 0 0 200px #00ffff;
+            }
+        }
+        
+        @keyframes bounce-glow {
+            0%, 80%, 100% { 
+                transform: scale(0) rotate(0deg);
+                box-shadow: 0 0 30px #00ffff;
+            } 
+            40% { 
+                transform: scale(1) rotate(180deg);
+                box-shadow: 0 0 50px #00ffff, 0 0 100px #00ffff;
+            }
+        }
+        
+        /* Matrix-style background effect */
+        .loading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(157, 78, 221, 0.1) 0%, transparent 50%);
+            animation: matrixFloat 6s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes matrixFloat {
+            0%, 100% { 
+                background-position: 0% 0%, 100% 100%;
+                opacity: 0.3;
+            }
+            50% { 
+                background-position: 100% 100%, 0% 0%;
+                opacity: 0.7;
+            }
+        }
+        
+        /* Prevent flash of unstyled content */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0a0a;
+            color: #00ffff;
+            overflow-x: hidden;
+        }
+        
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .loading-text,
+            .loading-dots span,
+            .loading::before {
+                animation: none !important;
+            }
+            
+            .loading-text {
+                text-shadow: 0 0 30px #00ffff;
+            }
+            
+            .loading-dots span {
+                box-shadow: 0 0 20px #00ffff;
+                transform: scale(1);
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .loading-text {
+                font-size: 3rem;
+            }
+            
+            .loading-dots span {
+                width: 15px;
+                height: 15px;
+            }
+        }
+        
+        /* Skip link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #00ffff;
+            color: #0a0a0a;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 10000;
+            transition: top 0.3s ease;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Loading Screen -->
+    <div id="preloader" class="loading">
+        <div class="loading-animation">
+            <div class="loading-text">INITIALIZING</div>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Skip link for accessibility -->
+    <a href="#hero" class="skip-link">Skip to main content</a>
+    
+    <!-- Main Application Container -->
+    <div id="root"></div>
+    
+    <!-- Enhanced Particle Canvas -->
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+    
+    <!-- React CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script type="text/babel" src="app.js"></script>
+    
+    <script>
+        // Enhanced page load management
+        let loadingComplete = false;
+        let fontsLoaded = false;
+        let scriptsLoaded = false;
+        
+        // Font loading detection
+        if ('fonts' in document) {
+            Promise.all([
+                document.fonts.load('700 2rem Orbitron'),
+                document.fonts.load('400 1rem Rajdhani')
+            ]).then(() => {
+                fontsLoaded = true;
+                checkLoadingComplete();
+            }).catch(() => {
+                fontsLoaded = true; // Fallback
+                checkLoadingComplete();
+            });
+        } else {
+            // Fallback for older browsers
+            setTimeout(() => {
+                fontsLoaded = true;
+                checkLoadingComplete();
+            }, 2000);
+        }
+        
+        // Script loading detection
+        window.addEventListener('load', function() {
+            scriptsLoaded = true;
+            checkLoadingComplete();
+        });
+        
+        function checkLoadingComplete() {
+            if (fontsLoaded && scriptsLoaded && !loadingComplete) {
+                loadingComplete = true;
+                setTimeout(function() {
+                    removePreloader();
+                }, 1500); // Minimum loading time for effect
+            }
+        }
+        
+        function removePreloader() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.transform = 'scale(0.95)';
+                preloader.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    document.documentElement.classList.add('loaded');
+                    
+                    // Trigger any post-load animations
+                    document.dispatchEvent(new CustomEvent('appLoaded'));
+                }, 800);
+            }
+        }
+        
+        // Viewport height fix for mobile browsers
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(setVH, 100);
+        });
+        
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    if (perfData) {
+                        console.log(`Page load time: ${Math.round(perfData.loadEventEnd - perfData.loadEventStart)}ms`);
+                        console.log(`DOM content loaded: ${Math.round(perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart)}ms`);
+                    }
+                }, 0);
+            });
+        }
+        
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('Application error:', e.error);
+            // Graceful fallback
+            if (!loadingComplete) {
+                setTimeout(removePreloader, 3000);
+            }
+        });
+        
+        // Intersection Observer polyfill check
+        if (!('IntersectionObserver' in window)) {
+            const script = document.createElement('script');
+            script.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+        
+        // Optimize canvas performance
+        function optimizeCanvas() {
+            const canvas = document.getElementById('particles-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    // Enable hardware acceleration
+                    ctx.imageSmoothingEnabled = false;
+                    
+                    // Pause particles when tab is not visible
+                    document.addEventListener('visibilitychange', function() {
+                        if (document.hidden) {
+                            canvas.style.animationPlayState = 'paused';
+                        } else {
+                            canvas.style.animationPlayState = 'running';
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Initialize optimizations when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', optimizeCanvas);
+        } else {
+            optimizeCanvas();
+        }
+        
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            // Alt + number shortcuts for navigation
+            if (e.altKey && !e.ctrlKey && !e.shiftKey) {
+                const sections = ['hero', 'about', 'skills', 'experience', 'projects', 'education', 'contact'];
+                const number = parseInt(e.key);
+                
+                if (number >= 1 && number <= sections.length) {
+                    e.preventDefault();
+                    const section = document.getElementById(sections[number - 1]);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                        section.focus({ preventScroll: true });
+                    }
+                }
+            }
+            
+            // Accessibility: Skip to main content
+            if (e.key === 'Tab' && e.target === document.body) {
+                const mainContent = document.getElementById('hero');
+                if (mainContent) {
+                    mainContent.focus({ preventScroll: true });
+                }
+            }
+        });
+        
+        // Touch gesture support for mobile
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let touchStartTime = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.changedTouches[0].screenY;
+            touchStartTime = Date.now();
+        }, { passive: true });
+        
+        document.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].screenY;
+            const touchDuration = Date.now() - touchStartTime;
+            handleSwipe(touchDuration);
+        }, { passive: true });
+        
+        function handleSwipe(duration) {
+            const swipeThreshold = 100;
+            const maxDuration = 300; // Maximum duration for a swipe
+            const diff = touchStartY - touchEndY;
+            
+            if (Math.abs(diff) > swipeThreshold && duration < maxDuration) {
+                // Add haptic feedback if supported
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(10);
+                }
+                
+                // Optional: Add visual feedback for swipe
+                if (Math.abs(diff) > swipeThreshold * 1.5) {
+                    navigator.vibrate && navigator.vibrate(20);
+                }
+            }
+        }
+        
+        // Service Worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Uncomment below to enable service worker
+                // navigator.serviceWorker.register('/sw.js')
+                //     .then(function(registration) {
+                //         console.log('SW registered: ', registration);
+                //     })
+                //     .catch(function(registrationError) {
+                //         console.log('SW registration failed: ', registrationError);
+                //     });
+            });
+        }
+        
+        // Smooth scrolling polyfill for older browsers
+        if (!('scrollBehavior' in document.documentElement.style)) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/gh/iamdustan/smoothscroll@1.4.0/src/smoothscroll.js';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+        
+        // Enhanced console message for developers
+        console.log(`
+        ╔══════════════════════════════════════════╗
+        ║     AKHIL M - FUTURISTIC PORTFOLIO       ║
+        ║                                          ║
+        ║  🚀 Advanced React Portfolio             ║
+        ║  ⚡ Enhanced Skills Stacking Effects     ║
+        ║  🎯 Interactive Name Sequence            ║
+        ║  📱 Responsive & Accessible              ║
+        ║                                          ║
+        ║  Keyboard shortcuts:                     ║
+        ║  Alt + 1-7: Navigate to sections         ║
+        ║                                          ║
+        ║  Built with: React, CSS3, Canvas API     ║
+        ║  New: Advanced 3D Card Stacking          ║
+        ╚══════════════════════════════════════════╝
+        `);
+        
+        // Debug mode for skills stacking
+        if (window.location.search.includes('debug')) {
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    console.log('🔧 Debug mode enabled');
+                    console.log('📊 Skills stacking system initialized');
+                    
+                    // Add visual debug indicators
+                    const debugStyle = document.createElement('style');
+                    debugStyle.textContent = `
+                        .skill-category::after {
+                            content: attr(data-index);
+                            position: absolute;
+                            top: 10px;
+                            left: 10px;
+                            background: rgba(255, 0, 0, 0.7);
+                            color: white;
+                            padding: 4px 8px;
+                            border-radius: 4px;
+                            font-size: 12px;
+                            font-weight: bold;
+                        }
+                    `;
+                    document.head.appendChild(debugStyle);
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
