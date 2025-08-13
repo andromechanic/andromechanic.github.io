@@ -8,10 +8,10 @@ const portfolioData = {
     "summary": "Dynamic professional transitioning from mechanical engineering to programming and AI, with expertise in building software solutions and leveraging AI technologies. Experienced in Python, Java, machine learning, and AI integration, with hands-on experience in web development using JavaScript and Vue.js. A problem solver passionate about developing innovative tools."
   },
   "skills": {
-    "programming": ["Python", "Java", "JavaScript"],
+    "programming": ["Python","C", "Java", "JavaScript"],
     "web": ["HTML", "CSS", "JavaScript", "Vue.js", "Flask", "SQLite"],
-    "ai_ml": ["Prompt Engineering", "Generative AI", "Machine Learning Foundation", "LLMs"],
-    "tools": ["Matplotlib", "CAD", "Fusion360", "Ansys", "Streamlit", "OpenAI", "Ollama"]
+    "ai_ml": ["Prompt Engineering", "Generative AI", "Machine Learning Techniques", "NLP","Fine Tuning LLMs"],
+    "tools": ["Scikit-Learn","Tensorflow","PyTorch","Streamlit", "OpenAI", "Ollama" ,"CAD", "Fusion360", "Ansys"]
   },
   "experience": [
     {
