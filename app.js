@@ -467,20 +467,31 @@ class StackingCardsController {
 // Navigation Component
 const Navigation = ({ activeSection, setActiveSection }) => {
   const navItems = ['Home', 'About', 'Skills', 'Experience', 'Projects', 'Education', 'Contact'];
+  const [menuOpen, setMenuOpen] = React.useState(false);
   
   const scrollToSection = (section) => {
     const element = document.getElementById(section.toLowerCase());
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(section.toLowerCase());
+      setMenuOpen(false); // Close menu on navigation
     }
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <nav className="nav-container">
       <div className="nav">
         <div className="nav-logo">AKHIL.M</div>
-        <ul className="nav-links">
+        <div className={`mobile-menu-toggle${menuOpen ? ' active' : ''}`} onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul className={`nav-links${menuOpen ? ' active' : ''}`}>
           {navItems.map(item => (
             <li key={item}>
               <a
