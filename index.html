@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+<style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#060610;
@@ -843,503 +844,494 @@ footer{padding:24px 48px;background:var(--bg);border-top:1px solid var(--border)
 
 
 <script>
-// Global error guard — if anything crashes, still dismiss the loader
-window.onerror=function(){
-  var el=document.getElementById('loader');
-  if(el)el.classList.add('done');
-  return false;
-};
-// ─── UTILITIES ───────────────────────────────────────────
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
-const raf = requestAnimationFrame;
+/* ============================================================
+   AKHIL M — Portfolio JS  |  Clean build for GitHub Pages
+   No external scripts, no CDN dependencies, no Cloudflare hooks
+   ============================================================ */
 
-// ─── LOADER ──────────────────────────────────────────────
-(()=>{
-  function dismissLoader(){
-    const el=document.getElementById('loader');
-    if(el&&!el.classList.contains('done'))el.classList.add('done');
-  }
-  // Hard fallback — always dismiss within 3s no matter what
-  setTimeout(dismissLoader,3000);
-  try{
-    const ldName=document.getElementById('ldName');
-    const ldBar=document.getElementById('ldBar');
-    const ldPct=document.getElementById('ldPct');
-    'AKHIL M'.split('').forEach((c,i)=>{
-      const sp=document.createElement('span');
-      sp.className='ld-char';
-      sp.textContent=c===' '?'\u00A0':c;
-      sp.style.animationDelay=`${i*.07}s`;
-      sp.style.color=c===' '?'transparent':'#e8e8f2';
-      if(ldName)ldName.appendChild(sp);
+// ── DISMISS LOADER (runs first, always) ──────────────────────
+function dismissLoader() {
+  var el = document.getElementById('loader');
+  if (el && !el.classList.contains('done')) el.classList.add('done');
+}
+// Absolute hard cap: dismiss after 2.5s no matter what
+setTimeout(dismissLoader, 2500);
+
+// ── BOOT LOADER ANIMATION ────────────────────────────────────
+(function() {
+  try {
+    var ldName = document.getElementById('ldName');
+    var ldBar  = document.getElementById('ldBar');
+    var ldPct  = document.getElementById('ldPct');
+    'AKHIL M'.split('').forEach(function(c, i) {
+      var sp = document.createElement('span');
+      sp.className = 'ld-char';
+      sp.textContent = c === ' ' ? '\u00A0' : c;
+      sp.style.animationDelay = (i * 0.07) + 's';
+      sp.style.color = c === ' ' ? 'transparent' : '#e8e8f2';
+      if (ldName) ldName.appendChild(sp);
     });
-    let pct=0;
-    const iv=setInterval(()=>{
-      try{
-        pct=Math.min(100,pct+Math.floor(Math.random()*12+4));
-        if(ldBar)ldBar.style.width=pct+'%';
-        if(ldPct)ldPct.textContent=pct+'%';
-        if(pct>=100){clearInterval(iv);setTimeout(dismissLoader,400);}
-      }catch(e){clearInterval(iv);dismissLoader();}
-    },80);
-  }catch(e){dismissLoader();}
-})();
+    var pct = 0;
+    var iv = setInterval(function() {
+      pct = Math.min(100, pct + Math.floor(Math.random() * 14 + 6));
+      if (ldBar) ldBar.style.width = pct + '%';
+      if (ldPct) ldPct.textContent = pct + '%';
+      if (pct >= 100) {
+        clearInterval(iv);
+        setTimeout(dismissLoader, 350);
+      }
+    }, 70);
+  } catch(e) { dismissLoader(); }
+}());
 
-// ─── CANVAS PARTICLES ────────────────────────────────────
-(()=>{
-  const cvs=$('#cvs'), ctx=cvs.getContext('2d');
-  let W,H,particles=[],mouse={x:-999,y:-999};
-  
-  function resize(){W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight}
-  resize(); window.addEventListener('resize',resize);
-  
-  class P{
-    constructor(){this.reset()}
-    reset(){
-      this.x=Math.random()*W; this.y=Math.random()*H;
-      this.vx=(Math.random()-.5)*.4; this.vy=(Math.random()-.5)*.4;
-      this.r=Math.random()*1.5+.5;
-      this.a=Math.random()*.5+.1;
-      const c=['#00f0ff','#ff2d78','#00ff9d','#f5c518'];
-      this.col=c[Math.floor(Math.random()*c.length)];
+// ── CANVAS PARTICLES ─────────────────────────────────────────
+(function() {
+  try {
+    var cvs = document.getElementById('cvs');
+    if (!cvs) return;
+    var ctx = cvs.getContext('2d');
+    var W, H, particles = [], mouse = { x: -999, y: -999 };
+    function resize() { W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    var COLS = ['#00f0ff','#ff2d78','#00ff9d','#f5c518'];
+    function mkParticle() {
+      return {
+        x: Math.random()*W, y: Math.random()*H,
+        vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4,
+        r: Math.random()*1.5+.5, a: Math.random()*.5+.1,
+        col: COLS[Math.floor(Math.random()*COLS.length)]
+      };
     }
-    update(){
-      this.x+=this.vx; this.y+=this.vy;
-      // Mouse repel
-      const dx=this.x-mouse.x, dy=this.y-mouse.y;
-      const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<100){const f=(100-d)/100; this.vx+=dx/d*f*.5; this.vy+=dy/d*f*.5}
-      this.vx*=.99; this.vy*=.99;
-      if(this.x<0)this.x=W; if(this.x>W)this.x=0;
-      if(this.y<0)this.y=H; if(this.y>H)this.y=0;
-    }
-    draw(){
-      ctx.save(); ctx.globalAlpha=this.a; ctx.fillStyle=this.col;
-      ctx.shadowBlur=8; ctx.shadowColor=this.col;
-      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fill();
-      ctx.restore();
-    }
-  }
-  
-  for(let i=0;i<100;i++) particles.push(new P());
-  
-  // Connect lines
-  function drawLines(){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<120){
-          ctx.save(); ctx.globalAlpha=(120-d)/120*.08;
-          ctx.strokeStyle='#00f0ff'; ctx.lineWidth=.5;
-          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke(); ctx.restore();
+    for (var i = 0; i < 90; i++) particles.push(mkParticle());
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(function(p) {
+        var dx = p.x - mouse.x, dy = p.y - mouse.y;
+        var d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 100 && d > 0) { var f = (100-d)/100; p.vx += dx/d*f*.5; p.vy += dy/d*f*.5; }
+        p.vx *= .99; p.vy *= .99;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.save(); ctx.globalAlpha = p.a; ctx.fillStyle = p.col;
+        ctx.shadowBlur = 8; ctx.shadowColor = p.col;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+      });
+      // Connection lines
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i+1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 110) {
+            ctx.save(); ctx.globalAlpha = (110-d)/110*.07;
+            ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = .5;
+            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); ctx.restore();
+          }
         }
       }
+      requestAnimationFrame(loop);
     }
-  }
-  
-  function loop(){
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p=>{p.update();p.draw()});
-    drawLines(); raf(loop);
-  }
-  loop();
-  
-  document.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY});
-  // Touch
-  document.addEventListener('touchmove',e=>{
-    mouse.x=e.touches[0].clientX; mouse.y=e.touches[0].clientY;
-  },{passive:true});
-  document.addEventListener('touchend',()=>{mouse.x=-999;mouse.y=-999});
-})();
+    loop();
+    document.addEventListener('mousemove', function(e) { mouse.x = e.clientX; mouse.y = e.clientY; });
+    document.addEventListener('touchmove', function(e) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', function() { mouse.x = -999; mouse.y = -999; });
+  } catch(e) {}
+}());
 
-// ─── CURSOR ──────────────────────────────────────────────
-(()=>{
-  if(window.matchMedia('(hover:none)').matches)return;
-  const cur=$('#cur'), ring=$('#cur-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX; my=e.clientY;
-    cur.style.left=mx+'px'; cur.style.top=my+'px';
-  });
-  
-  (function anim(){
-    rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    raf(anim);
-  })();
-  
-  $$('a,button,.flip-card,.tag,.soc,.stat-box').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('link-hover'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('link-hover'));
-  });
-  
-  document.addEventListener('mousedown',()=>document.body.classList.add('click'));
-  document.addEventListener('mouseup',()=>document.body.classList.remove('click'));
-})();
-
-// ─── CLICK RIPPLE ────────────────────────────────────────
-document.addEventListener('click',e=>{
-  const r=document.createElement('div');
-  r.className='ripple';
-  r.style.cssText=`left:${e.clientX}px;top:${e.clientY}px;width:80px;height:80px`;
-  document.body.appendChild(r);
-  setTimeout(()=>r.remove(),700);
-});
-// Touch ripple
-document.addEventListener('touchstart',e=>{
-  const t=e.touches[0];
-  const r=document.createElement('div');
-  r.className='ripple';
-  r.style.cssText=`left:${t.clientX}px;top:${t.clientY}px;width:60px;height:60px`;
-  document.body.appendChild(r);
-  setTimeout(()=>r.remove(),700);
-},{passive:true});
-
-// ─── SCROLL PROGRESS ─────────────────────────────────────
-window.addEventListener('scroll',()=>{
-  const s=document.documentElement;
-  const p=(s.scrollTop||document.body.scrollTop)/(s.scrollHeight-s.clientHeight);
-  $('#progress').style.width=(p*100)+'%';
-  // Nav scroll
-  $('#nav').classList.toggle('scrolled',window.scrollY>50);
-  // Back to top
-  $('#btt').classList.toggle('show',window.scrollY>400);
-  // Active nav
-  const secs=['about','skills','experience','projects','education','contact'];
-  secs.forEach(id=>{
-    const el=document.getElementById(id);
-    if(!el)return;
-    const top=el.getBoundingClientRect().top;
-    $$('.nav-links a').forEach(a=>{
-      if(a.getAttribute('href')==='#'+id)
-        a.classList.toggle('active',top<=150&&top>=-el.offsetHeight);
+// ── CUSTOM CURSOR (desktop only) ─────────────────────────────
+(function() {
+  try {
+    if (!window.matchMedia || window.matchMedia('(hover:none)').matches) return;
+    var cur = document.getElementById('cur');
+    var ring = document.getElementById('cur-ring');
+    if (!cur || !ring) return;
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px'; cur.style.top = my + 'px';
     });
-  });
-},{passive:true});
+    (function anim() {
+      rx += (mx - rx) * .13; ry += (my - ry) * .13;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(anim);
+    }());
+    document.querySelectorAll('a,button,.flip-card,.tag,.soc,.stat-box').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { document.body.classList.add('link-hover'); });
+      el.addEventListener('mouseleave', function() { document.body.classList.remove('link-hover'); });
+    });
+    document.addEventListener('mousedown', function() { document.body.classList.add('click'); });
+    document.addEventListener('mouseup', function() { document.body.classList.remove('click'); });
+  } catch(e) {}
+}());
 
-// ─── HERO FLOATING DOTS ──────────────────────────────────
-(()=>{
-  const hero=$('.hero');
-  for(let i=0;i<12;i++){
-    const d=document.createElement('div');
-    d.className='hero-dot';
-    const sz=Math.random()*4+2;
-    const cols=['#00f0ff','#ff2d78','#00ff9d','#f5c518'];
-    d.style.cssText=`
-      width:${sz}px;height:${sz}px;
-      left:${Math.random()*90}%;top:${Math.random()*80+10}%;
-      background:${cols[Math.floor(Math.random()*cols.length)]};
-      opacity:${Math.random()*.4+.1};
-      --d:${Math.random()*4+4}s;
-      --tx:${(Math.random()-.5)*30}px;
-      --ty:${(Math.random()-.5)*30}px;
-      animation-delay:${Math.random()*-8}s;
-    `;
-    hero.appendChild(d);
-  }
-})();
+// ── RIPPLE ON CLICK/TOUCH ────────────────────────────────────
+function spawnRipple(x, y, size) {
+  try {
+    var r = document.createElement('div');
+    r.className = 'ripple';
+    r.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + size + 'px;height:' + size + 'px';
+    document.body.appendChild(r);
+    setTimeout(function() { if (r.parentNode) r.parentNode.removeChild(r); }, 700);
+  } catch(e) {}
+}
+document.addEventListener('click', function(e) { spawnRipple(e.clientX, e.clientY, 80); });
+document.addEventListener('touchstart', function(e) { spawnRipple(e.touches[0].clientX, e.touches[0].clientY, 60); }, { passive: true });
 
-// ─── TYPEWRITER ──────────────────────────────────────────
-(()=>{
-  const el=$('#typewriter');
-  const phrases=['> Building AI-powered tools...','> Engineering meets intelligence.','> Python. Flask. Vue. Machine Learning.','> Open to new opportunities!'];
-  let pi=0,ci=0,del=false,timer;
-  
-  function type(){
-    const phrase=phrases[pi];
-    if(!del){
-      if(ci<=phrase.length){
-        el.innerHTML=phrase.slice(0,ci)+'<span class="typewriter-cursor"></span>';
-        ci++; timer=setTimeout(type,65);
-      } else { del=true; timer=setTimeout(type,1800); }
-    } else {
-      if(ci>=0){
-        el.innerHTML=phrase.slice(0,ci)+'<span class="typewriter-cursor"></span>';
-        ci--; timer=setTimeout(type,35);
-      } else { del=false; pi=(pi+1)%phrases.length; timer=setTimeout(type,400); }
+// ── SCROLL: PROGRESS BAR + NAV + BACK-TO-TOP ─────────────────
+window.addEventListener('scroll', function() {
+  try {
+    var s = document.documentElement;
+    var prog = document.getElementById('progress');
+    if (prog) prog.style.width = ((s.scrollTop || document.body.scrollTop) / (s.scrollHeight - s.clientHeight) * 100) + '%';
+    var nav = document.getElementById('nav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
+    var btt = document.getElementById('btt');
+    if (btt) btt.classList.toggle('show', window.scrollY > 400);
+    // Active nav link
+    var secs = ['about','skills','experience','projects','education','contact'];
+    secs.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var top = el.getBoundingClientRect().top;
+      document.querySelectorAll('.nav-links a').forEach(function(a) {
+        if (a.getAttribute('href') === '#' + id)
+          a.classList.toggle('active', top <= 150 && top >= -el.offsetHeight);
+      });
+    });
+  } catch(e) {}
+}, { passive: true });
+
+// ── HERO FLOATING DOTS ───────────────────────────────────────
+(function() {
+  try {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    var COLS = ['#00f0ff','#ff2d78','#00ff9d','#f5c518'];
+    for (var i = 0; i < 12; i++) {
+      var d = document.createElement('div');
+      d.className = 'hero-dot';
+      var sz = Math.random()*4+2;
+      var tx = (Math.random()-.5)*30;
+      var ty = (Math.random()-.5)*30;
+      d.style.cssText = [
+        'width:'+sz+'px','height:'+sz+'px',
+        'left:'+(Math.random()*90)+'%','top:'+(Math.random()*80+10)+'%',
+        'background:'+COLS[Math.floor(Math.random()*COLS.length)],
+        'opacity:'+(Math.random()*.4+.1),
+        '--d:'+(Math.random()*4+4)+'s',
+        '--tx:'+tx+'px','--ty:'+ty+'px',
+        'animation-delay:'+(Math.random()*-8)+'s'
+      ].join(';');
+      hero.appendChild(d);
     }
-  }
-  setTimeout(type,1800);
-})();
+  } catch(e) {}
+}());
 
-// ─── SCROLL REVEAL ───────────────────────────────────────
-(()=>{
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
-  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-  
-  $$('.rev,.rev-left,.rev-right,.rev-scale,.tl-item').forEach(el=>obs.observe(el));
-  
-  // Skill bars
-  const barObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.skill-bar-fill').forEach(bar=>{
-          bar.style.width=bar.dataset.w+'%';
-        });
+// ── TYPEWRITER ───────────────────────────────────────────────
+(function() {
+  try {
+    var el = document.getElementById('typewriter');
+    if (!el) return;
+    var phrases = [
+      '> Building AI-powered tools...',
+      '> Engineering meets intelligence.',
+      '> Python. Flask. Vue. Machine Learning.',
+      '> Open to new opportunities!'
+    ];
+    var pi = 0, ci = 0, deleting = false, timer;
+    function type() {
+      var phrase = phrases[pi];
+      if (!deleting) {
+        el.innerHTML = phrase.slice(0, ci) + '<span class="typewriter-cursor"></span>';
+        ci++;
+        if (ci > phrase.length) { deleting = true; timer = setTimeout(type, 1800); return; }
+      } else {
+        el.innerHTML = phrase.slice(0, ci) + '<span class="typewriter-cursor"></span>';
+        ci--;
+        if (ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; timer = setTimeout(type, 400); return; }
       }
-    });
-  },{threshold:.3});
-  $$('.skill-block').forEach(el=>barObs.observe(el));
-  
-  // Counters
-  const cntObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.querySelectorAll('[data-target]').forEach(el=>{
-          const target=+el.dataset.target;
-          let cur=0;
-          const step=Math.ceil(target/40);
-          const iv=setInterval(()=>{
-            cur=Math.min(target,cur+step);
-            el.textContent=cur;
-            if(cur>=target)clearInterval(iv);
-          },40);
+      timer = setTimeout(type, deleting ? 35 : 65);
+    }
+    setTimeout(type, 1800);
+  } catch(e) {}
+}());
+
+// ── SCROLL REVEAL ────────────────────────────────────────────
+(function() {
+  try {
+    if (!window.IntersectionObserver) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rev,.rev-left,.rev-right,.rev-scale').forEach(function(el) { obs.observe(el); });
+
+    // Skill bars
+    var barObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-bar-fill').forEach(function(bar) {
+            bar.style.width = bar.getAttribute('data-w') + '%';
+          });
+        }
+      });
+    }, { threshold: .3 });
+    document.querySelectorAll('.skill-block').forEach(function(el) { barObs.observe(el); });
+
+    // Counters
+    var cntObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('[data-target]').forEach(function(el) {
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          var cur = 0, step = Math.ceil(target / 40);
+          var iv = setInterval(function() {
+            cur = Math.min(target, cur + step);
+            el.textContent = cur;
+            if (cur >= target) clearInterval(iv);
+          }, 40);
         });
         cntObs.unobserve(e.target);
-      }
-    });
-  },{threshold:.5});
-  $$('.stats-row').forEach(el=>cntObs.observe(el));
-})();
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('.stats-row').forEach(function(el) { cntObs.observe(el); });
 
-// ─── TIMELINE STAGGER ────────────────────────────────────
-(()=>{
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        $$('.tl-item').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*200));
-        obs.disconnect();
-      }
-    });
-  },{threshold:.1});
-  const tl=$('.timeline');
-  if(tl)obs.observe(tl);
-})();
+    // Timeline stagger
+    var tlObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        document.querySelectorAll('.tl-item').forEach(function(el, i) {
+          setTimeout(function() { el.classList.add('in'); }, i * 200);
+        });
+        tlObs.disconnect();
+      });
+    }, { threshold: .1 });
+    var tl = document.querySelector('.timeline');
+    if (tl) tlObs.observe(tl);
+  } catch(e) {}
+}());
 
-// ─── TERMINAL ────────────────────────────────────────────
-(()=>{
-  const body=$('#tBody'), input=$('#tInput');
-  if(!input)return;
-  
-  const data={
-    name:'Akhil M', role:'AI Lead @ We Guide',
-    location:'Palakkad, India', available:'Yes — open to opportunities',
-    skills:['Python','JavaScript','Vue.js','Flask','Machine Learning','LLMs'],
-    projects:4, experience:'3+ years',
-    email:'akhil.m2k'+'@'+'gmail.com',
-    github:'github.com/andromechanic'
-  };
-  
-  const cmds={
-    help:()=>[
-      '<span class="t-out">Available commands:</span>',
-      '<span class="t-key">whoami</span>        — About me',
-      '<span class="t-key">skills</span>        — My skill set',
-      '<span class="t-key">projects</span>      — My projects',
-      '<span class="t-key">contact</span>       — Contact info',
-      '<span class="t-key">available</span>     — Availability status',
-      '<span class="t-key">experience</span>    — Work history',
-      '<span class="t-key">clear</span>         — Clear terminal',
-      '<span class="t-key">secret</span>        — ???',
-    ],
-    whoami:()=>[
-      `<span class="t-key">name:</span>      <span class="t-val">${data.name}</span>`,
-      `<span class="t-key">role:</span>      <span class="t-val">${data.role}</span>`,
-      `<span class="t-key">location:</span>  <span class="t-val">${data.location}</span>`,
-      `<span class="t-key">passion:</span>   <span class="t-val">AI • Engineering • Code</span>`,
-    ],
-    skills:()=>['<span class="t-out">Tech stack:</span>',...data.skills.map(s=>`  <span class="t-val">▸ ${s}</span>`)],
-    projects:()=>[
-      `<span class="t-out">${data.projects} featured projects</span>`,
-      '  <span class="t-val">▸ Library Management System</span>',
-      '  <span class="t-val">▸ Face Recognition Attendance</span>',
-      '  <span class="t-val">▸ Influencer Sponsor Platform</span>',
-      '  <span class="t-val">▸ Personal Assistant Bot</span>',
-    ],
-    contact:()=>[
-      `<span class="t-key">email:</span>   <span class="t-val">${data.email}</span>`,
-      `<span class="t-key">github:</span>  <span class="t-val">${data.github}</span>`,
-      `<span class="t-key">linkedin:</span><span class="t-val"> linkedin.com/in/andromechanic</span>`,
-    ],
-    available:()=>[`<span class="t-key">status:</span> <span style="color:var(--green)">✓ ${data.available}</span>`],
-    experience:()=>[
-      '<span class="t-out">Work history:</span>',
-      '  <span class="t-val">▸ AI Lead @ We Guide (2025–Present)</span>',
-      '  <span class="t-val">▸ Technical Lead @ Technovate (2024–2025)</span>',
-      '  <span class="t-val">▸ AI Intern @ Qapp AI (2024)</span>',
-    ],
-    secret:()=>{
-      triggerKonami(); return['<span style="color:var(--gold)">⚡ POWER MODE ACTIVATED! ⚡</span>'];
-    },
-    clear:()=>{
-      // Keep only input row
-      while(body.childNodes.length>1)body.removeChild(body.firstChild);
-      return null;
+// ── PARALLAX HERO CIRCLE ─────────────────────────────────────
+window.addEventListener('mousemove', function(e) {
+  try {
+    var c = document.querySelector('.hero-circle');
+    if (!c) return;
+    var x = (e.clientX / window.innerWidth - .5) * 20;
+    var y = (e.clientY / window.innerHeight - .5) * 20;
+    c.style.transform = 'translateY(-50%) translate(' + x + 'px,' + y + 'px)';
+  } catch(ex) {}
+}, { passive: true });
+
+// Gyro for mobile
+if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', function(e) {
+    try {
+      var c = document.querySelector('.hero-circle');
+      if (!c) return;
+      var x = (e.gamma || 0) / 90 * 15;
+      var y = (e.beta  || 0) / 90 * 15;
+      c.style.transform = 'translateY(-50%) translate(' + x + 'px,' + y + 'px)';
+    } catch(ex) {}
+  }, { passive: true });
+}
+
+// ── TERMINAL ─────────────────────────────────────────────────
+(function() {
+  try {
+    var body = document.getElementById('tBody');
+    var input = document.getElementById('tInput');
+    if (!body || !input) return;
+
+    var EMAIL = 'akhil.m2k' + '\u0040' + 'gmail.com';
+    var data = {
+      name:'Akhil M', role:'AI Lead @ We Guide',
+      location:'Palakkad, India', available:'Yes — open to opportunities',
+      skills:['Python','JavaScript','Vue.js','Flask','Machine Learning','LLMs'],
+      email: EMAIL, github:'github.com/andromechanic'
+    };
+
+    var cmds = {
+      help: function() { return [
+        '<span class="t-out">Available commands:</span>',
+        '<span class="t-key">whoami</span>      — About me',
+        '<span class="t-key">skills</span>      — My skill set',
+        '<span class="t-key">projects</span>    — My projects',
+        '<span class="t-key">contact</span>     — Contact info',
+        '<span class="t-key">available</span>   — Availability status',
+        '<span class="t-key">experience</span>  — Work history',
+        '<span class="t-key">clear</span>       — Clear terminal',
+        '<span class="t-key">secret</span>      — ???',
+      ]; },
+      whoami: function() { return [
+        '<span class="t-key">name:</span>      <span class="t-val">' + data.name + '</span>',
+        '<span class="t-key">role:</span>      <span class="t-val">' + data.role + '</span>',
+        '<span class="t-key">location:</span>  <span class="t-val">' + data.location + '</span>',
+        '<span class="t-key">passion:</span>   <span class="t-val">AI \u2022 Engineering \u2022 Code</span>',
+      ]; },
+      skills: function() {
+        var lines = ['<span class="t-out">Tech stack:</span>'];
+        data.skills.forEach(function(s) { lines.push('  <span class="t-val">\u25b8 ' + s + '</span>'); });
+        return lines;
+      },
+      projects: function() { return [
+        '<span class="t-out">4 featured projects</span>',
+        '  <span class="t-val">\u25b8 Library Management System</span>',
+        '  <span class="t-val">\u25b8 Face Recognition Attendance</span>',
+        '  <span class="t-val">\u25b8 Influencer Sponsor Platform</span>',
+        '  <span class="t-val">\u25b8 Personal Assistant Bot</span>',
+      ]; },
+      contact: function() { return [
+        '<span class="t-key">email:</span>    <span class="t-val">' + data.email + '</span>',
+        '<span class="t-key">github:</span>   <span class="t-val">' + data.github + '</span>',
+        '<span class="t-key">linkedin:</span> <span class="t-val">linkedin.com/in/andromechanic</span>',
+      ]; },
+      available: function() { return ['<span class="t-key">status:</span> <span style="color:var(--green)">\u2713 ' + data.available + '</span>']; },
+      experience: function() { return [
+        '<span class="t-out">Work history:</span>',
+        '  <span class="t-val">\u25b8 AI Lead @ We Guide (2025\u2013Present)</span>',
+        '  <span class="t-val">\u25b8 Technical Lead @ Technovate (2024\u20132025)</span>',
+        '  <span class="t-val">\u25b8 AI Intern @ Qapp AI (2024)</span>',
+      ]; },
+      secret: function() { triggerKonami(); return ['<span style="color:var(--gold)">\u26a1 POWER MODE ACTIVATED! \u26a1</span>']; },
+      clear: function() {
+        var inputRow = body.querySelector('.t-input-row');
+        while (body.firstChild && body.firstChild !== inputRow) body.removeChild(body.firstChild);
+        return null;
+      }
+    };
+
+    function addLines(lines) {
+      if (!lines) return;
+      var inputRow = body.querySelector('.t-input-row');
+      lines.forEach(function(html, i) {
+        var div = document.createElement('div');
+        div.className = 't-line';
+        div.innerHTML = html;
+        body.insertBefore(div, inputRow);
+        setTimeout(function() { div.classList.add('show'); }, i * 60);
+      });
+      body.scrollTop = body.scrollHeight;
     }
-  };
-  
-  function addLines(lines,isCmd=false){
-    if(!lines)return;
-    lines.forEach((html,i)=>{
-      const div=document.createElement('div');
-      div.className='t-line';
-      div.innerHTML=html;
-      body.insertBefore(div,body.querySelector('.t-input-row'));
-      setTimeout(()=>div.classList.add('show'),i*60);
-    });
-    body.scrollTop=body.scrollHeight;
-  }
-  
-  function prompt(cmd){
-    const div=document.createElement('div');
-    div.className='t-line show';
-    div.innerHTML=`<span class="t-prompt">akhil@portfolio:~$</span> <span class="t-cmd">${cmd}</span>`;
-    body.insertBefore(div,body.querySelector('.t-input-row'));
-  }
-  
-  // Welcome
-  setTimeout(()=>{
-    addLines([
-      '<span class="t-out">Welcome to Akhil\'s interactive terminal.</span>',
-      '<span class="t-out">Type <span class="t-key">help</span> to see available commands.</span>',
-    ]);
-  },2500);
-  
-  input.addEventListener('keydown',e=>{
-    if(e.key==='Enter'){
-      const cmd=input.value.trim().toLowerCase();
-      input.value='';
-      if(!cmd)return;
-      prompt(cmd);
-      if(cmds[cmd]){
-        const out=cmds[cmd]();
-        if(out)addLines(out);
+
+    function addPrompt(cmd) {
+      var div = document.createElement('div');
+      div.className = 't-line show';
+      div.innerHTML = '<span class="t-prompt">akhil@portfolio:~$</span> <span class="t-cmd">' + cmd + '</span>';
+      body.insertBefore(div, body.querySelector('.t-input-row'));
+    }
+
+    setTimeout(function() {
+      addLines([
+        '<span class="t-out">Welcome to Akhil\'s interactive terminal.</span>',
+        '<span class="t-out">Type <span class="t-key">help</span> and press Enter to see commands.</span>',
+      ]);
+    }, 2800);
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter') return;
+      var cmd = input.value.trim().toLowerCase();
+      input.value = '';
+      if (!cmd) return;
+      addPrompt(cmd);
+      if (cmds[cmd]) {
+        var out = cmds[cmd]();
+        if (out) addLines(out);
       } else {
-        addLines([`<span class="t-out">Command not found: ${cmd}. Type <span class="t-key">help</span> for commands.</span>`]);
+        addLines(['<span class="t-out">Command not found: <span class="t-key">' + cmd + '</span>. Type <span class="t-key">help</span>.</span>']);
       }
-    }
-  });
-  
-  // Click anywhere on terminal focuses input
-  body.addEventListener('click',()=>input.focus());
-})();
+    });
+    body.addEventListener('click', function() { input.focus(); });
+  } catch(e) {}
+}());
 
-// ─── SKIP TO ABOUT ───────────────────────────────────────
-function skipToAbout(){
-  const el=document.getElementById('about');
-  if(el)el.scrollIntoView({behavior:'smooth'});
+// ── MOBILE MENU ──────────────────────────────────────────────
+function toggleMobileMenu() {
+  try {
+    var b = document.getElementById('burger');
+    var m = document.getElementById('mobileMenu');
+    if (!b || !m) return;
+    b.classList.toggle('open');
+    m.classList.toggle('open');
+    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+  } catch(e) {}
+}
+function closeMobileMenu() {
+  try {
+    var b = document.getElementById('burger');
+    var m = document.getElementById('mobileMenu');
+    if (b) b.classList.remove('open');
+    if (m) m.classList.remove('open');
+    document.body.style.overflow = '';
+  } catch(e) {}
 }
 
-function toggleMobileMenu(){
-  $('#burger').classList.toggle('open');
-  $('#mobileMenu').classList.toggle('open');
-  document.body.style.overflow=$('#mobileMenu').classList.contains('open')?'hidden':'';
-}
-function closeMobileMenu(){
-  $('#burger').classList.remove('open');
-  $('#mobileMenu').classList.remove('open');
-  document.body.style.overflow='';
+// ── SKIP TO ABOUT ────────────────────────────────────────────
+function skipToAbout() {
+  var el = document.getElementById('about');
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ─── FORM SUBMIT ─────────────────────────────────────────
-function handleSubmit(e){
+// ── FORM SUBMIT ──────────────────────────────────────────────
+function handleSubmit(e) {
   e.preventDefault();
-  const btn=e.target.querySelector('button');
-  btn.style.opacity='.6'; btn.style.pointerEvents='none';
-  setTimeout(()=>{
-    btn.style.opacity=''; btn.style.pointerEvents='';
-    const status=$('#formStatus');
-    status.classList.add('show');
-    e.target.reset();
-    setTimeout(()=>status.classList.remove('show'),4000);
-  },1200);
+  try {
+    var btn = e.target.querySelector('button');
+    if (btn) { btn.style.opacity = '.5'; btn.style.pointerEvents = 'none'; }
+    setTimeout(function() {
+      if (btn) { btn.style.opacity = ''; btn.style.pointerEvents = ''; }
+      var status = document.getElementById('formStatus');
+      if (status) status.classList.add('show');
+      e.target.reset();
+      setTimeout(function() { if (status) status.classList.remove('show'); }, 4000);
+    }, 1200);
+  } catch(ex) {}
 }
 
-// ─── BACK TO TOP ─────────────────────────────────────────
-function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+// ── BACK TO TOP ──────────────────────────────────────────────
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-// ─── LIVE CLOCK ──────────────────────────────────────────
-(()=>{
-  function tick(){
-    const now=new Date();
-    const ist=new Date(now.getTime()+now.getTimezoneOffset()*60000+5.5*3600000);
-    const h=String(ist.getHours()).padStart(2,'0');
-    const m=String(ist.getMinutes()).padStart(2,'0');
-    const s=String(ist.getSeconds()).padStart(2,'0');
-    const el=$('#liveTime');
-    if(el)el.textContent=`${h}:${m}:${s}`;
+// ── LIVE CLOCK (IST) ─────────────────────────────────────────
+(function() {
+  function tick() {
+    try {
+      var now = new Date();
+      var ist = new Date(now.getTime() + now.getTimezoneOffset()*60000 + 5.5*3600000);
+      var h = String(ist.getHours()).padStart(2,'0');
+      var m = String(ist.getMinutes()).padStart(2,'0');
+      var s = String(ist.getSeconds()).padStart(2,'0');
+      var el = document.getElementById('liveTime');
+      if (el) el.textContent = h + ':' + m + ':' + s;
+    } catch(e) {}
   }
-  tick(); setInterval(tick,1000);
-})();
+  tick(); setInterval(tick, 1000);
+}());
 
-// ─── KONAMI CODE ─────────────────────────────────────────
-(()=>{
-  const code=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-  let idx=0;
-  document.addEventListener('keydown',e=>{
-    if(e.key===code[idx]){idx++;if(idx===code.length){triggerKonami();idx=0;}}else idx=0;
+// ── KONAMI CODE ──────────────────────────────────────────────
+(function() {
+  var code = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  var idx = 0;
+  document.addEventListener('keydown', function(e) {
+    if (e.key === code[idx]) { idx++; if (idx === code.length) { triggerKonami(); idx = 0; } }
+    else idx = 0;
   });
-})();
-function triggerKonami(){
-  const msg=$('#konamiMsg');
-  msg.classList.add('show');
-  // Rainbow flash
-  document.body.style.transition='filter .3s';
-  let f=0;
-  const iv=setInterval(()=>{
-    document.body.style.filter=`hue-rotate(${f}deg)`;
-    f+=20; if(f>360){clearInterval(iv);document.body.style.filter=''}
-  },50);
-  setTimeout(()=>msg.classList.remove('show'),3000);
+}());
+
+function triggerKonami() {
+  try {
+    var msg = document.getElementById('konamiMsg');
+    if (msg) msg.classList.add('show');
+    var f = 0;
+    var iv = setInterval(function() {
+      document.body.style.filter = 'hue-rotate(' + f + 'deg)';
+      f += 20;
+      if (f > 360) { clearInterval(iv); document.body.style.filter = ''; }
+    }, 50);
+    setTimeout(function() { if (msg) msg.classList.remove('show'); }, 3000);
+  } catch(e) {}
 }
-
-// ─── PARALLAX HERO CIRCLE ────────────────────────────────
-window.addEventListener('mousemove',e=>{
-  const circle=$('.hero-circle');
-  if(!circle)return;
-  const x=(e.clientX/window.innerWidth-.5)*20;
-  const y=(e.clientY/window.innerHeight-.5)*20;
-  circle.style.transform=`translateY(-50%) translate(${x}px,${y}px)`;
-},{passive:true});
-
-// ─── HERO TILT ON MOBILE (GYRO) ──────────────────────────
-if(window.DeviceOrientationEvent){
-  window.addEventListener('deviceorientation',e=>{
-    const circle=$('.hero-circle');
-    if(!circle)return;
-    const x=(e.gamma||0)/90*15;
-    const y=(e.beta||0)/90*15;
-    circle.style.transform=`translateY(-50%) translate(${x}px,${y}px)`;
-  },{passive:true});
-}
-
-// ─── SWIPE GESTURE (mobile) ──────────────────────────────
-(()=>{
-  let startX,startY;
-  const sections=['hero','about','skills','experience','projects','education','contact'];
-  document.addEventListener('touchstart',e=>{
-    startX=e.touches[0].clientX;
-    startY=e.touches[0].clientY;
-  },{passive:true});
-  document.addEventListener('touchend',e=>{
-    const dx=e.changedTouches[0].clientX-startX;
-    const dy=e.changedTouches[0].clientY-startY;
-    if(Math.abs(dy)>Math.abs(dx)||Math.abs(dy)<50)return;
-    // vertical swipe — we just let native scroll handle it
-  },{passive:true});
-})();
-
-// ─── SECTION ENTRY FLASH ─────────────────────────────────
-(()=>{
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.style.transition='background .5s';
-        const orig=getComputedStyle(e.target).background;
-        e.target.style.background='rgba(0,240,255,.015)';
-        setTimeout(()=>e.target.style.backgr
+</script>
+</body>
+</html>
