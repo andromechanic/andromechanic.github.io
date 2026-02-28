@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AKHIL M — Portfolio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -798,7 +799,7 @@ footer{padding:24px 48px;background:var(--bg);border-top:1px solid var(--border)
       <div class="socials">
         <a href="https://github.com/andromechanic" target="_blank" class="soc"><span>GH</span></a>
         <a href="https://www.linkedin.com/in/andromechanic" target="_blank" class="soc"><span>LI</span></a>
-        <a href="/cdn-cgi/l/email-protection#ccada7a4a5a0e2a1fea78caba1ada5a0e2afa3a1" class="soc"><span>@</span></a>
+        <a href="mailto:akhil.m2k&#64;gmail.com" class="soc"><span>@</span></a>
       </div>
     </div>
     <div class="rev-right">
@@ -840,7 +841,14 @@ footer{padding:24px 48px;background:var(--bg);border-top:1px solid var(--border)
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M5 12l7-7 7 7" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+<script>
+// Global error guard — if anything crashes, still dismiss the loader
+window.onerror=function(){
+  var el=document.getElementById('loader');
+  if(el)el.classList.add('done');
+  return false;
+};
 // ─── UTILITIES ───────────────────────────────────────────
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -848,19 +856,34 @@ const raf = requestAnimationFrame;
 
 // ─── LOADER ──────────────────────────────────────────────
 (()=>{
-  const name='AKHIL M', ldName=$('#ldName'), ldBar=$('#ldBar'), ldPct=$('#ldPct');
-  name.split('').forEach((c,i)=>{
-    const sp=document.createElement('span');
-    sp.className='ld-char'; sp.textContent=c===''?'\u00A0':c;
-    sp.style.animationDelay=`${i*.07}s`; sp.style.color=c===' '?'transparent':'#e8e8f2';
-    ldName.appendChild(sp);
-  });
-  let pct=0;
-  const iv=setInterval(()=>{
-    pct=Math.min(100,pct+Math.floor(Math.random()*12+4));
-    ldBar.style.width=pct+'%'; ldPct.textContent=pct+'%';
-    if(pct>=100){clearInterval(iv);setTimeout(()=>$('#loader').classList.add('done'),500)}
-  },100);
+  function dismissLoader(){
+    const el=document.getElementById('loader');
+    if(el&&!el.classList.contains('done'))el.classList.add('done');
+  }
+  // Hard fallback — always dismiss within 3s no matter what
+  setTimeout(dismissLoader,3000);
+  try{
+    const ldName=document.getElementById('ldName');
+    const ldBar=document.getElementById('ldBar');
+    const ldPct=document.getElementById('ldPct');
+    'AKHIL M'.split('').forEach((c,i)=>{
+      const sp=document.createElement('span');
+      sp.className='ld-char';
+      sp.textContent=c===' '?'\u00A0':c;
+      sp.style.animationDelay=`${i*.07}s`;
+      sp.style.color=c===' '?'transparent':'#e8e8f2';
+      if(ldName)ldName.appendChild(sp);
+    });
+    let pct=0;
+    const iv=setInterval(()=>{
+      try{
+        pct=Math.min(100,pct+Math.floor(Math.random()*12+4));
+        if(ldBar)ldBar.style.width=pct+'%';
+        if(ldPct)ldPct.textContent=pct+'%';
+        if(pct>=100){clearInterval(iv);setTimeout(dismissLoader,400);}
+      }catch(e){clearInterval(iv);dismissLoader();}
+    },80);
+  }catch(e){dismissLoader();}
 })();
 
 // ─── CANVAS PARTICLES ────────────────────────────────────
@@ -1108,7 +1131,7 @@ window.addEventListener('scroll',()=>{
     location:'Palakkad, India', available:'Yes — open to opportunities',
     skills:['Python','JavaScript','Vue.js','Flask','Machine Learning','LLMs'],
     projects:4, experience:'3+ years',
-    email:'akhil.m2k@gmail.com',
+    email:'akhil.m2k'+'@'+'gmail.com',
     github:'github.com/andromechanic'
   };
   
