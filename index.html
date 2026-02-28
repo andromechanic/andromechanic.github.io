@@ -160,7 +160,7 @@ section{padding:100px 48px;position:relative;z-index:2}
 .about-img-dot{position:absolute;top:20px;right:20px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse .8s ease-in-out infinite alternate}
 @keyframes pulse{to{box-shadow:0 0 25px var(--green)}}
 .about-img-text{font-family:var(--display);font-size:6rem;color:rgba(255,255,255,.03);letter-spacing:.1em}
-.about-profile-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s cubic-bezier(.23,1,.32,1);filter:grayscale(20%)}
+.about-profile-img{width:100%;height:auto;max-height:100%;object-fit:contain;object-position:center center;display:block;transition:transform .6s cubic-bezier(.23,1,.32,1);filter:grayscale(15%)}
 .about-img-wrap:hover .about-profile-img{transform:scale(1.04);filter:grayscale(0%)}
 .about-frame-deco{position:absolute;width:100%;height:100%;top:10px;left:10px;border:1px solid rgba(0,240,255,.08);pointer-events:none;transition:all .4s}
 .about-img-wrap:hover .about-frame-deco{top:15px;left:15px}
@@ -807,15 +807,15 @@ footer{padding:24px 48px;background:var(--bg);border-top:1px solid var(--border)
       <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
         <div class="form-field">
           <label>Your Name</label>
-          <input type="text" placeholder="John Doe" required>
+          <input type="text" required>
         </div>
         <div class="form-field">
           <label>Email Address</label>
-          <input type="email" placeholder="john@example.com" required>
+          <input type="email" required>
         </div>
         <div class="form-field">
           <label>Message</label>
-          <textarea placeholder="Tell me about your project..." required></textarea>
+          <textarea required></textarea>
         </div>
         <div class="form-submit">
           <button type="submit" class="btn btn-primary"><div class="shine"></div><span>Send Message</span><span class="btn-icon">→</span></button>
