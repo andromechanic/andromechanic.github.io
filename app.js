@@ -21,10 +21,10 @@ const portfolioData = {
       "description": "Drove the development of a skilled workforce by leading a startup team in delivering intensive, hands-on Python programming training. Delivered technical presentations at educational institutions and partnered with academic bodies to design workshops."
     },
     {
-      "title": "Technical Lead",
-      "company": "Technovate",
+      "title": "Machine Learning Engineer",
+      "company": "Trilacious Labs",
       "period": "Jan 2024 - May 2025",
-      "description": "Led a team at a startup, mentoring students in Python programming through comprehensive training sessions. Delivered technical talks at various colleges and collaborated with institutions to create workshops."
+      "description": "Worked with different practical use cases making new solutions using machine learning models and implementing to real life aiding IOT"
     },
     {
       "title": "AI Intern",
