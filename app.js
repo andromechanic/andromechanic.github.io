@@ -24,7 +24,7 @@ const portfolioData = {
       "title": "Machine Learning Engineer",
       "company": "Trilacious Labs",
       "period": "Jan 2024 - May 2025",
-      "description": "Worked with different practical use cases making new solutions using machine learning models and implementing to real life aiding IOT"
+      "description": "Worked with practical use cases to build new solutions using machine learning models and implement them in real-world IoT applications."
     },
     {
       "title": "AI Intern",
